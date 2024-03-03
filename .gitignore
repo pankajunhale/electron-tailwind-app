@@ -22,6 +22,10 @@ release/app/dist
 release/build
 .erb/dll
 
+#db
+release/app/*.db
+*.db
+
 .idea
 npm-debug.log.*
 *.css.d.ts
