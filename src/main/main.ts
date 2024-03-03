@@ -43,11 +43,25 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   await knex
+    .table('RoleMaster')
+    .insert(
+      {
+        RoleName: 'pmu',
+        IsActive: true,
+      },
+      'id',
+    )
+    .then((res) => console.log(res));
+  await knex
     .select('*')
     .from('RoleMaster')
     .then((data: any) => {
       if (data) {
-        event.reply('ipc-example', msgTemplate('pong: found data'));
+        console.log(data);
+        event.reply(
+          'ipc-example',
+          msgTemplate('pong: found data' + JSON.stringify(data)),
+        );
       } else {
         event.reply('ipc-example', msgTemplate('pong: data not found'));
       }
